@@ -1,93 +1,60 @@
-#basic calculator
+require 'net/http'
+require 'json'
+require 'rubygems'
 
-#life calculator
-def years_alive(birthday)
-  #days in the months array
-  days_in_months=[31,28,31,30,31,30,31,31,30,31,30,31]
-  
-  #current date 
-  the_time=Time.now.to_s.split(" ")
-  date=the_time[0].split("-")
- 
-  #save each part of the date as a separate variable
-  year=date[0].to_f
-  month=date[1].to_f
-  day=date[2].to_f
- 
-  #person's date
-  user_date=birthday.split("/")
-  user_year=user_date[2].to_f
-  user_month=user_date[0].to_f
-  user_day=user_date[1].to_f
-
-  #additional days to years_age(years_age is expressed in days)
-  i=0 #counter
-  extra_days=0
-  days_in_months.each do |days|
-  i+=1
-     if i < month
-        extra_days+=days
-     end
+def workout(sum_of_values)
+  img_link = ''
+  if 4999 < sum_of_values && sum_of_values < 10001
+  img_link = 'images/easy515.jpg'
+  #Easy, Breezy, Beautiful (5min, 15min)
+  elsif sum_of_values > 15000
+    img_link = 'images/easy30.jpg'
+  #Easy, Breezy, Beautiful (30min)
+  elsif 1210 < sum_of_values && sum_of_values < 1214 || 1310 < sum_of_values && sum_of_values < 1314
+    img_link = 'images/calorie515.jpg'
+   #Calorie Blast (5min, 15min)
+  elsif 11200< sum_of_values && sum_of_values < 11204 || 11300 < sum_of_values && sum_of_values < 11304
+    img_link = 'images/calorie30.jpg'
+   #Calorie Blast (30min)
+  elsif sum_of_values == 2211 || sum_of_values == 2311
+    img_link = 'images/heart515.jpg'
+   #Get that Heart Pumpin' (5min, 15min)
+  elsif sum_of_values == 12201 || sum_of_values == 12301
+    img_link = 'images/heart30.jpg'
+   #Get that Heart Pumpin' (30min)
+  elsif sum_of_values == 2212 || sum_of_values == 2312
+    img_link = 'images/fierce515.jpg'
+   #Gettin' Fierce (5min,15min)
+  elsif sum_of_values == 12202 || sum_of_values == 12302
+    img_link = 'images/fierce30.jpg'
+   #Gettin' Fierce (30min)
+  elsif sum_of_values == 2213 || sum_of_values == 2313
+    img_link = 'images/toned515.jpg'
+   #Tone Up (5min, 15min)
+  elsif sum_of_values ==  12203 || sum_of_values == 12303
+    img_link = 'images/toned30.jpg'
+   #Tone Up (30min)
+  elsif sum_of_values == 3211 || sum_of_values == 3311
+    img_link = 'images/furious515.jpg'
+   #Fast n' Furious (5min,15min)
+  elsif sum_of_values == 13201 || sum_of_values == 13301
+    img_link = 'images/furious30.jpg'
+   #Fast n' Furious (30min)
+  elsif sum_of_values == 3212 || sum_of_values == 3312
+    img_link = 'images/kickass515.jpg'
+   #Kick-Ass Warrior (5min, 15min)
+  elsif sum_of_values == 13202 || sum_of_values == 13302
+    img_link = 'images/kickass30.jpg'
+   #Kick-Ass Warrior (30min)
+  elsif sum_of_values == 3213 || sum_of_values == 3313
+    img_link = 'images/steelcut515.jpg'
+   #Steel Cut Abs (5min, 15min)
+  elsif sum_of_values == 13203 || sum_of_values == 13303
+    img_link = 'images/steelcut30.jpg'
+    #Steel Cut Abs (30min)
+  else
+    img_link = 'https://d1h69ey09xg1xv.cloudfront.net/wp-content/uploads/2015/06/cute-corgin-working-out.gif'
+    # If they don't answer a question on accident
   end
-  
-  #people who haven't had their birthday yet this year
-  if user_month > month || (user_month==month && user_day > day)
-    years_age = (year - user_year - 1)*365
-    k=0
-    more_days=0
-    days_in_months.each do |days|
-      k+=1
-      if k > user_month
-        more_days+=days
-      end
-    end
-    days_age = extra_days+day+more_days+days_in_months[user_month-1]-user_day
-  #people who have had their birthday this year
-  else 
-    years_age=(year - user_year)*365
-    j=0
-    less_days=0
-    subtract_days=days_in_months.each do |month|
-      j+=1
-      if user_month > j 
-        less_days+=month
-      end
-    end
-    days_age=extra_days+day-less_days-user_day
-    puts days_age
-  end
- #factoring in leap years
- leap_years=((years_age/4)/365).floor
-  #total of everything
- days_age+years_age+leap_years
+  img_link
 end
-
-
-
-def klossify(phrase)
-  phrase.gsub("c","k").gsub("C","K")
-end
-
-
- def piglatinize(word)
-    non_pig_latin_words = ["i", "me", "to", "too", "a", "an", "in", "and", "on"]
-    vowels = ["a", "e", "i", "o", "u"]
- 
-      if non_pig_latin_words.include?(word)
-        word
-       elsif vowels.include? word[0]
-        word << "ay"
-       else
-         consonants = ""
-       while !vowels.include?(word[0])
-         consonants << word[0]
-         word = word.split("")[1..-1].join
-       end
-       word + consonants + 'ay'
-   end
- end
- 
-
- def to_pig_latin(string)
-   string.split.collect{|word| piglatinize(word)}.join(" ")
- end
